@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { LanguageZipSelector } from "@/components/dashboard/LanguageZipSelector";
+import { CameraCapture } from "@/components/dashboard/CameraCapture";
 
 export default function DashboardPage() {
   const [_language, setLanguage] = useState("");
@@ -14,8 +15,10 @@ export default function DashboardPage() {
         onZipChange={setZip}
       />
 
-      {/* CameraCapture goes here */}
-
+      <CameraCapture
+        onCapture={(base64) => console.log("Captured image:", base64)}
+        isAnalyzing={false}
+      />
       {/* NextStepsPanel goes here */}
 
       {/* ResourceGrid goes here */}
