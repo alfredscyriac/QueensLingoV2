@@ -1,27 +1,46 @@
-"use client";
+'use client';
+import { useState } from 'react';
+import { CameraCapture } from '@/components/dashboard/CameraCapture';
+import { LanguageZipSelector } from '@/components/dashboard/LanguageZipSelector';
+import { AnalysisResult, ResourceOrg } from '@/types';
 
-import { useState } from "react";
-import { LanguageZipSelector } from "@/components/dashboard/LanguageZipSelector";
-import { CameraCapture } from "@/components/dashboard/CameraCapture";
+export default function Dashboard() {
+  const [language, setLanguage] = useState('Spanish');
+  const [zipcode, setZipcode] = useState('11373');
+  const [result, setResult] = useState<AnalysisResult | null>(null);
+  const [resources, setResources] = useState<ResourceOrg[]>([]);
+  const [audioUrl, setAudioUrl] = useState<string | null>(null);
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
 
-export default function DashboardPage() {
-  const [_language, setLanguage] = useState("");
-  const [_zip, setZip] = useState("");
+  const handleCapture = async (base64: string) => {
+    setIsAnalyzing(true);
+    setResult(null); setResources([]); setAudioUrl(null);
+    try {
+      const res = await fetch('/api/analyze', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ image: base64, language: language.label, zipcode }),
+      });
+      const data: AnalysisResult = await res.json();
+      setResult(data);
+
+      const resourcesRes = await fetch(`/api/resources?keywords=${data.resource_keywords.join(',')}&zipcode=${zipcode}`);
+      setResources(await resourcesRes.json());
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setIsAnalyzing(false);
+    }
+  };
 
   return (
-    <main className="flex min-h-screen flex-col gap-6 p-6">
+    <main className="max-w-md mx-auto p-4 space-y-4 min-h-screen">
+      <h1 className="text-2xl font-bold">QueensLinGov</h1>
       <LanguageZipSelector
-        onLanguageChange={setLanguage}
-        onZipChange={setZip}
+        language={language} zipcode={zipcode}
+        onLanguageChange={setLanguage} onZipcodeChange={setZipcode}
       />
-
-      <CameraCapture
-        onCapture={(base64) => console.log("Captured image:", base64)}
-        isAnalyzing={false}
-      />
-      {/* NextStepsPanel goes here */}
-
-      {/* ResourceGrid goes here */}
+      <CameraCapture onCapture={handleCapture} isAnalyzing={isAnalyzing} />
     </main>
   );
 }
