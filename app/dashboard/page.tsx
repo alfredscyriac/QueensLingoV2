@@ -27,11 +27,17 @@ export default function Dashboard() {
       const data: AnalysisResult = await res.json();
       setResult(data);
 
-      const resourcesRes = await fetch(
-        `/api/resources?keywords=${data.resource_keywords.join(
-          ","
-        )}&zipcode=${zipcode}`
-      );
+      const [ttsRes, resourcesRes] = await Promise.all([
+        fetch('/api/tts', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ text: data.translated_explanation }),
+        }),
+        fetch(`/api/resources?keywords=${data.resource_keywords.join(',')}&zipcode=${zipcode}`),
+      ]);
+
+      const blob = await ttsRes.blob();
+      setAudioUrl(URL.createObjectURL(blob));
       setResources(await resourcesRes.json());
     } catch (err) {
       console.error(err);
