@@ -1,7 +1,9 @@
 "use client";
 
+
 import { Volume2, Square } from "lucide-react";
 import { useState, useRef } from "react";
+
 
 export function AudioPlayer({ audioUrl }: { audioUrl: string }) {
   const [playing, setPlaying] = useState(false);
@@ -25,10 +27,11 @@ export function AudioPlayer({ audioUrl }: { audioUrl: string }) {
   return (
     <button
       onClick={toggle}
-      className="flex items-center gap-2 text-sm font-medium text-primary border border-primary px-3 py-1 rounded"
+      className="flex items-center gap-2 text-sm font-medium text-primary border border-primary px-3 py-1.5 rounded-lg"
     >
       {playing ? <Square size={14} /> : <Volume2 size={14} />}
       {playing ? "Stop" : "Listen in your language"}
     </button>
   );
 }
+

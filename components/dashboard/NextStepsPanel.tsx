@@ -6,6 +6,7 @@ import { AudioPlayer } from '@/components/ui/AudioPlayer';
 interface Props {
   result: AnalysisResult;
   audioUrl: string | null;
+  isTtsLoading: boolean;
   language: { code: string; label: string; native: string; ttsSupported: boolean };
 }
 
@@ -15,7 +16,7 @@ const urgencyConfig = {
   high: { label: 'Urgent', className: 'bg-red-100 text-red-800 border-red-200' },
 };
 
-export function NextStepsPanel({ result, audioUrl, language }: Props) {
+export function NextStepsPanel({ result, audioUrl, isTtsLoading, language }: Props) {
   const urgency = urgencyConfig[result.urgency] ?? urgencyConfig.low;
 
   return (
@@ -52,8 +53,14 @@ export function NextStepsPanel({ result, audioUrl, language }: Props) {
       </div>
 
       {/* TTS audio */}
-      {language.ttsSupported && audioUrl && (
-        <AudioPlayer audioUrl={audioUrl} />
+      {language.ttsSupported && (
+        isTtsLoading ? (
+          <p className="text-xs text-muted-foreground animate-pulse">Generating audio...</p>
+        ) : audioUrl ? (
+          <AudioPlayer audioUrl={audioUrl} />
+        ) : (
+          <p className="text-xs text-muted-foreground">Audio unavailable — check ElevenLabs API key.</p>
+        )
       )}
       {!language.ttsSupported && (
         <p className="text-xs text-muted-foreground">

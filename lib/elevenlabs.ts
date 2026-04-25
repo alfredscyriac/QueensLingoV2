@@ -14,6 +14,9 @@ export async function synthesizeSpeech(text: string): Promise<Buffer> {
       }),
     }
   );
-  if (!response.ok) throw new Error(`ElevenLabs ${response.status}`);
+  if (!response.ok) {
+    const body = await response.text();
+    throw new Error(`ElevenLabs ${response.status}: ${body}`);
+  }
   return Buffer.from(await response.arrayBuffer());
 }

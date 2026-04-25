@@ -6,7 +6,8 @@ export async function POST(req: NextRequest) {
     const { text } = await req.json();
     const audio = await synthesizeSpeech(text);
     return new NextResponse(new Uint8Array(audio), { headers: { 'Content-Type': 'audio/mpeg' } });
-  } catch {
-    return NextResponse.json({ error: 'TTS failed' }, { status: 500 });
+  } catch (err) {
+    console.error('[TTS route error]', err);
+    return NextResponse.json({ error: 'TTS failed', detail: String(err) }, { status: 500 });
   }
 }
