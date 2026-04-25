@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap");
+
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
@@ -49,6 +51,7 @@
 }
 
 :root {
+  /* ── shadcn tokens (untouched) ── */
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
@@ -81,6 +84,14 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+
+  /* ── QueensLingo brand tokens ── */
+  --ql-primary: #38bdf8;
+  --ql-primary-hover: #0ea5e9;
+  --ql-primary-shadow: #0284c7;
+  --ql-secondary-border: #bae6fd;
+  --ql-secondary-hover: #f0f9ff;
+  --ql-font: "Nunito", sans-serif;
 }
 
 .dark {
@@ -123,8 +134,103 @@
   }
   body {
     @apply bg-background text-foreground;
+    font-family: var(--ql-font);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
   html {
     @apply font-sans;
+    scroll-behavior: smooth;
   }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--ql-font);
+    font-weight: 800;
+    line-height: 1.2;
+  }
+}
+
+/* ── QueensLingo Components ───────────────────────────────── */
+@layer components {
+  .btn-primary {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 1rem;
+    border-radius: 1rem;
+    background-color: var(--ql-primary);
+    box-shadow: 0 4px 0 var(--ql-primary-shadow);
+    color: #fff;
+    font-family: var(--ql-font);
+    font-weight: 800;
+    font-size: 0.875rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: background-color 150ms, transform 150ms;
+  }
+  .btn-primary:hover {
+    background-color: var(--ql-primary-hover);
+  }
+  .btn-primary:active {
+    transform: scale(0.97);
+  }
+
+  .btn-secondary {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 1rem;
+    border-radius: 1rem;
+    background-color: #fff;
+    border: 2px solid var(--ql-secondary-border);
+    box-shadow: 0 4px 0 var(--ql-secondary-border);
+    color: var(--ql-primary);
+    font-family: var(--ql-font);
+    font-weight: 800;
+    font-size: 0.875rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: background-color 150ms, transform 150ms;
+  }
+  .btn-secondary:hover {
+    background-color: var(--ql-secondary-hover);
+  }
+  .btn-secondary:active {
+    transform: scale(0.97);
+  }
+
+  .ql-card {
+    background-color: #fff;
+    border-radius: 1.25rem;
+    padding: 1.5rem;
+    border: 1px solid oklch(0.922 0 0);
+    box-shadow: 0 2px 12px rgba(56, 189, 248, 0.08);
+  }
+
+  .ql-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 1.5rem;
+    text-align: center;
+  }
+}
+
+/* ── Scrollbar ───────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #f9fafb;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--ql-primary);
+  border-radius: 99px;
 }

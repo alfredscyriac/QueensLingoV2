@@ -73,7 +73,7 @@ export function CameraCapture({
         <button
           onClick={handleRetake}
           disabled={isAnalyzing}
-          className="w-full border border-border py-3 rounded-xl text-sm font-medium"
+          className="btn-secondary"
         >
           Retake
         </button>
@@ -82,7 +82,7 @@ export function CameraCapture({
           <button
             onClick={handleCapture}
             disabled={isAnalyzing}
-            className="flex items-center justify-center gap-2 w-full bg-primary text-primary-foreground py-3 rounded-xl font-medium"
+            className="btn-primary gap-2"
           >
             {isAnalyzing ? "Analyzing..." : "Capture Document"}
             <Camera className="size-4" />
@@ -91,7 +91,7 @@ export function CameraCapture({
           <button
             onClick={() => fileInputRef.current?.click()}
             disabled={isAnalyzing}
-            className="w-full border border-border py-3 rounded-xl text-sm font-medium"
+            className="btn-secondary"
           >
             Upload Image Instead
           </button>
