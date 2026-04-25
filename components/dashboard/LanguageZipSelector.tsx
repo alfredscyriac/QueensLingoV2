@@ -19,21 +19,23 @@ import {
   CommandList,
 } from "@/components/ui/command";
 
+type Language = (typeof LANGUAGES)[number];
+
 interface LanguageZipSelectorProps {
-  onLanguageChange?: (code: string) => void;
-  onZipChange?: (zip: string) => void;
+  language: Language;
+  zipcode: string;
+  onLanguageChange: (lang: Language) => void;
+  onZipcodeChange: (zip: string) => void;
 }
 
 export function LanguageZipSelector({
+  language,
+  zipcode,
   onLanguageChange,
-  onZipChange,
+  onZipcodeChange,
 }: LanguageZipSelectorProps) {
   const [langOpen, setLangOpen] = useState(false);
   const [zipOpen, setZipOpen] = useState(false);
-  const [language, setLanguage] = useState("");
-  const [zip, setZip] = useState("");
-
-  const selectedLang = LANGUAGES.find((l) => l.code === language);
 
   return (
     <div className="flex gap-4">
@@ -42,12 +44,9 @@ export function LanguageZipSelector({
           <button
             role="combobox"
             aria-expanded={langOpen}
-            className={cn(
-              "flex h-9 w-52 items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-1 focus:ring-ring",
-              !language && "text-muted-foreground"
-            )}
+            className="flex h-9 w-52 items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-1 focus:ring-ring"
           >
-            {selectedLang ? selectedLang.native : "Select language…"}
+            {language.native}
             <ChevronsUpDownIcon className="ml-2 size-4 shrink-0 opacity-50" />
           </button>
         </PopoverTrigger>
@@ -61,11 +60,9 @@ export function LanguageZipSelector({
                   <CommandItem
                     key={lang.code}
                     value={`${lang.native} ${lang.label}`}
-                    data-checked={lang.code === language}
+                    data-checked={lang.code === language.code}
                     onSelect={() => {
-                      const next = lang.code === language ? "" : lang.code;
-                      setLanguage(next);
-                      onLanguageChange?.(next);
+                      onLanguageChange(lang);
                       setLangOpen(false);
                     }}
                   >
@@ -88,10 +85,10 @@ export function LanguageZipSelector({
             aria-expanded={zipOpen}
             className={cn(
               "flex h-9 w-36 items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-1 focus:ring-ring",
-              !zip && "text-muted-foreground"
+              !zipcode && "text-muted-foreground"
             )}
           >
-            {zip || "Select ZIP…"}
+            {zipcode || "Select ZIP…"}
             <ChevronsUpDownIcon className="ml-2 size-4 shrink-0 opacity-50" />
           </button>
         </PopoverTrigger>
@@ -105,11 +102,9 @@ export function LanguageZipSelector({
                   <CommandItem
                     key={z}
                     value={z}
-                    data-checked={z === zip}
+                    data-checked={z === zipcode}
                     onSelect={() => {
-                      const next = z === zip ? "" : z;
-                      setZip(next);
-                      onZipChange?.(next);
+                      onZipcodeChange(z === zipcode ? "" : z);
                       setZipOpen(false);
                     }}
                   >
