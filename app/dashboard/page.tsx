@@ -43,26 +43,22 @@ export default function Dashboard() {
       const data: AnalysisResult = await analyzeRes.json();
       setResult(data);
 
-      // Step 2: Fetch resources (always)
-      const resourcesRes = await fetch(
-        `/api/resources?keywords=${data.resource_keywords.join(',')}&zipcode=${zipcode}`
-      );
-      if (resourcesRes.ok) {
-        setResources(await resourcesRes.json());
-      }
-
-      // Step 3: TTS only if language supports it
-      if (language.ttsSupported) {
-        const ttsRes = await fetch('/api/tts', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+      const [ttsRes, resourcesRes] = await Promise.all([
+        fetch("/api/tts", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ text: data.translated_explanation }),
-        });
-        if (ttsRes.ok) {
-          const blob = await ttsRes.blob();
-          setAudioUrl(URL.createObjectURL(blob));
-        }
-      }
+        }),
+        fetch(
+          `/api/resources?keywords=${data.resource_keywords.join(
+            ","
+          )}&zipcode=${zipcode}`
+        ),
+      ]);
+
+      const blob = await ttsRes.blob();
+      setAudioUrl(URL.createObjectURL(blob));
+      setResources(await resourcesRes.json());
     } catch (err) {
       console.error(err);
       setError('Something went wrong. Please try again with better lighting.');
@@ -72,8 +68,10 @@ export default function Dashboard() {
   };
 
   return (
-    <main className="max-w-md mx-auto p-4 space-y-4 min-h-screen pb-12">
-      {/* Language + Zipcode selectors */}
+    <main className="max-w-md mx-auto p-4 space-y-4 min-h-screen bg-background">
+      <h1 className="text-2xl font-extrabold tracking-tight text-sky-400">
+        QueensLingo
+      </h1>
       <LanguageZipSelector
         language={language}
         zipcode={zipcode}
