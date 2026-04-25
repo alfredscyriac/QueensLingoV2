@@ -19,7 +19,7 @@ export default function Dashboard() {
       const res = await fetch('/api/analyze', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ image: base64, language: language.label, zipcode }),
+        body: JSON.stringify({ image: base64, language, zipcode }),
       });
       const data: AnalysisResult = await res.json();
       setResult(data);
@@ -37,8 +37,7 @@ export default function Dashboard() {
     <main className="max-w-md mx-auto p-4 space-y-4 min-h-screen">
       <h1 className="text-2xl font-bold">QueensLinGov</h1>
       <LanguageZipSelector
-        language={language} zipcode={zipcode}
-        onLanguageChange={setLanguage} onZipcodeChange={setZipcode}
+        onLanguageChange={setLanguage} onZipChange={setZipcode}
       />
       <CameraCapture onCapture={handleCapture} isAnalyzing={isAnalyzing} />
     </main>
