@@ -68,44 +68,43 @@ export default function Dashboard() {
   };
 
   return (
-    <main className="max-w-md mx-auto p-4 space-y-4 min-h-screen bg-background">
-      <h1 className="text-2xl font-extrabold tracking-tight text-sky-400">
-        QueensLingo
-      </h1>
-      <LanguageZipSelector
-        language={language}
-        zipcode={zipcode}
-        onLanguageChange={setLanguage}
-        onZipcodeChange={setZipcode}
-      />
+    <div className="dark min-h-screen bg-background text-foreground">
+      <main className="mx-auto w-full max-w-md sm:max-w-lg px-4 sm:px-6 pt-20 pb-16 space-y-5">
 
-      {/* Camera */}
-      <CameraCapture
-        onCapture={handleCapture}
-        isAnalyzing={isAnalyzing}
-      />
-
-      {/* Error state */}
-      {error && (
-        <div className="rounded-xl bg-red-50 border border-red-200 p-3">
-          <p className="text-sm text-red-700">{error}</p>
-        </div>
-      )}
-
-      {/* Results */}
-      {result && (
-        <NextStepsPanel
-          result={result}
-          audioUrl={audioUrl}
+        <LanguageZipSelector
           language={language}
+          zipcode={zipcode}
+          onLanguageChange={setLanguage}
+          onZipcodeChange={setZipcode}
         />
-      )}
 
-      {/* Resource cards */}
-      {resources.length > 0 && (
-        <ResourceGrid resources={resources} />
-      )}
-    </main>
+        <CameraCapture
+          onCapture={handleCapture}
+          isAnalyzing={isAnalyzing}
+        />
+
+        {/* Error state */}
+        {error && (
+          <div className="rounded-xl bg-red-950/60 border border-red-700/50 p-3">
+            <p className="text-sm text-red-300">{error}</p>
+          </div>
+        )}
+
+        {/* Results */}
+        {result && (
+          <NextStepsPanel
+            result={result}
+            audioUrl={audioUrl}
+            language={language}
+          />
+        )}
+
+        {/* Resource cards */}
+        {resources.length > 0 && (
+          <ResourceGrid resources={resources} />
+        )}
+      </main>
+    </div>
   );
 }
 

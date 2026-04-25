@@ -1,4 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap");
 
 @import "tailwindcss";
 @import "tw-animate-css";
@@ -86,12 +85,12 @@
   --sidebar-ring: oklch(0.708 0 0);
 
   /* ── QueensLingo brand tokens ── */
-  --ql-primary: #38bdf8;
-  --ql-primary-hover: #0ea5e9;
-  --ql-primary-shadow: #0284c7;
-  --ql-secondary-border: #bae6fd;
-  --ql-secondary-hover: #f0f9ff;
-  --ql-font: "Nunito", sans-serif;
+  --ql-primary: #be185d;
+  --ql-primary-hover: #9d174d;
+  --ql-primary-shadow: #831843;
+  --ql-secondary-border: #fbcfe8;
+  --ql-secondary-hover: #fdf2f8;
+  --ql-font: var(--font-inter), "Inter", sans-serif;
 }
 
 .dark {
