@@ -86,7 +86,7 @@ export default function Home() {
         </main>
 
         <footer className="relative z-10 py-4 text-center text-xs text-zinc-500">
-          © {new Date().getFullYear()} QueensLingo · Queens College Hackathon
+          © {new Date().getFullYear()} QueensLingo · HunterHacks Spring 2026 Hackathon
         </footer>
       </div>
     </div>

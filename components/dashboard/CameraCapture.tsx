@@ -119,20 +119,20 @@ export function CameraCapture({
             <button
               onClick={handleCapture}
               disabled={isAnalyzing}
-              className="flex items-center justify-center gap-2 bg-[#E91E7B] hover:bg-[#d0186c] disabled:opacity-50 disabled:cursor-not-allowed text-white py-4 px-6 rounded-full font-semibold transition-all shadow-lg shadow-[#E91E7B]/20 active:scale-[0.98] aria-disabled:opacity-50"
+              className="flex items-center justify-center gap-2 bg-[#E91E7B] hover:bg-[#d0186c] disabled:opacity-50 disabled:cursor-not-allowed text-white py-4 px-6 rounded-2xl font-semibold transition-all shadow-lg shadow-[#E91E7B]/20 active:scale-[0.98] aria-disabled:opacity-50"
               style={{ opacity: !isReady ? 0.45 : undefined }}
             >
               <Camera size={20} />
-              Take Picture
+              TAKE PICTURE
             </button>
             <button
               onClick={() => fileInputRef.current?.click()}
               disabled={isAnalyzing}
-              className="flex items-center justify-center gap-2 bg-white hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed text-gray-900 py-4 px-6 rounded-full font-semibold transition-all shadow-lg active:scale-[0.98]"
+              className="flex items-center justify-center gap-2 bg-white hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed text-gray-900 py-4 px-6 rounded-2xl font-semibold transition-all shadow-lg active:scale-[0.98]"
               style={{ opacity: !isReady ? 0.45 : undefined }}
             >
               <Upload size={20} />
-              Upload
+              UPLOAD
             </button>
           </>
         )}
