@@ -5,7 +5,7 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
 export async function analyzeDocument(base64Image: string, language: string, zipcode: string){
     const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
 
-    const prompt = `You are a multilingual document assistant for immigrants in Queens, NY. Be extremely brief and simple.
+    const prompt = `You are a multilingual document assistant for immigrants in Queens, NY. Be extremely brief and simple. Note that the image the user chooses to upload can vary tremendously from electrical bills, to school registration, to offer letters, loan applications, etc. Some documents such as electric bills won't have anything on the page to be filled out it will be more so actions such as pay this bill by this deadline BUT also explain why the bill costed that much. The reason these images are being uploaded are with desires to understand what it is, why its important, and what they need to do. 
 
 User language: ${language}
 User ZIP: ${zipcode}
