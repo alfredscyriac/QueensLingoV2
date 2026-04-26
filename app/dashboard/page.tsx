@@ -8,17 +8,18 @@ import { ResourceGrid } from '@/components/dashboard/ResourceGrid';
 import { LANGUAGES } from '@/lib/languages';
 import { AnalysisResult, ResourceOrg } from '@/types';
 
-const DEFAULT_LANGUAGE = LANGUAGES.find(l => l.code === 'es')!;
-const DEFAULT_ZIPCODE = '11373';
+type Language = (typeof LANGUAGES)[number];
 
 export default function Dashboard() {
-  const [language, setLanguage] = useState(DEFAULT_LANGUAGE);
-  const [zipcode, setZipcode] = useState(DEFAULT_ZIPCODE);
+  const [language, setLanguage] = useState<Language | null>(null);
+  const [zipcode, setZipcode] = useState('');
   const [result, setResult] = useState<AnalysisResult | null>(null);
   const [resources, setResources] = useState<ResourceOrg[]>([]);
   const [audioUrl, setAudioUrl] = useState<string | null>(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  const isReady = !!language && !!zipcode;
 
   const handleCapture = async (base64: string) => {
     setIsAnalyzing(true);
@@ -34,7 +35,7 @@ export default function Dashboard() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           image: base64,
-          language: language.label,
+          language: language!.label,
           zipcode,
         }),
       });
@@ -87,6 +88,7 @@ export default function Dashboard() {
         <CameraCapture
           onCapture={handleCapture}
           isAnalyzing={isAnalyzing}
+          isReady={isReady}
         />
 
         {/* Error state */}
@@ -101,7 +103,7 @@ export default function Dashboard() {
           <NextStepsPanel
             result={result}
             audioUrl={audioUrl}
-            language={language}
+            language={language!}
           />
         )}
 

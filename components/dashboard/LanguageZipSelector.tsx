@@ -21,7 +21,7 @@ import {
 type Language = (typeof LANGUAGES)[number];
 
 interface LanguageZipSelectorProps {
-  language: Language;
+  language: Language | null;
   zipcode: string;
   onLanguageChange: (lang: Language) => void;
   onZipcodeChange: (zip: string) => void;
@@ -45,7 +45,7 @@ export function LanguageZipSelector({
             aria-expanded={langOpen}
             className="w-full appearance-none bg-white/5 hover:bg-white/10 backdrop-blur-md border border-white/10 rounded-2xl py-4 pl-5 pr-12 text-white text-sm outline-none focus:border-[#E91E7B]/50 transition-all cursor-pointer shadow-lg flex items-center justify-between"
           >
-            {language.native}
+            {language ? language.native : <span className="text-white/50">Select language…</span>}
             <ChevronsUpDownIcon className="ml-2 size-4 shrink-0 text-white/50" />
           </button>
         </PopoverTrigger>
@@ -59,7 +59,7 @@ export function LanguageZipSelector({
                   <CommandItem
                     key={lang.code}
                     value={`${lang.native} ${lang.label}`}
-                    data-checked={lang.code === language.code}
+                    data-checked={lang.code === language?.code}
                     onSelect={() => {
                       onLanguageChange(lang);
                       setLangOpen(false);

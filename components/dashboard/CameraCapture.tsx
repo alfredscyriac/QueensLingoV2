@@ -4,6 +4,7 @@ import Webcam from "react-webcam";
 import { useRef, useCallback, useState } from "react";
 import { Camera, Upload, Loader2, RotateCcw } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { toast } from "sonner";
 
 const videoConstraints = {
   facingMode: { ideal: "environment" },
@@ -12,24 +13,34 @@ const videoConstraints = {
 export function CameraCapture({
   onCapture,
   isAnalyzing,
+  isReady,
 }: {
   onCapture: (base64: string) => void;
   isAnalyzing: boolean;
+  isReady: boolean;
 }) {
   const webcamRef = useRef<Webcam>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [preview, setPreview] = useState<string | null>(null);
 
   const handleCapture = useCallback(() => {
+    if (!isReady) {
+      toast.warning("Please select your language and ZIP code first.");
+      return;
+    }
     const shot = webcamRef.current?.getScreenshot();
     if (!shot) return;
     setPreview(shot);
     onCapture(shot.split(",")[1]);
-  }, [onCapture]);
+  }, [onCapture, isReady]);
 
   const handleUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
+    if (!isReady) {
+      toast.warning("Please select your language and ZIP code first.");
+      return;
+    }
     e.target.value = "";
     const reader = new FileReader();
     reader.onload = (ev) => {
@@ -108,7 +119,8 @@ export function CameraCapture({
             <button
               onClick={handleCapture}
               disabled={isAnalyzing}
-              className="flex items-center justify-center gap-2 bg-[#E91E7B] hover:bg-[#d0186c] disabled:opacity-50 disabled:cursor-not-allowed text-white py-4 px-6 rounded-full font-semibold transition-all shadow-lg shadow-[#E91E7B]/20 active:scale-[0.98]"
+              className="flex items-center justify-center gap-2 bg-[#E91E7B] hover:bg-[#d0186c] disabled:opacity-50 disabled:cursor-not-allowed text-white py-4 px-6 rounded-full font-semibold transition-all shadow-lg shadow-[#E91E7B]/20 active:scale-[0.98] aria-disabled:opacity-50"
+              style={{ opacity: !isReady ? 0.45 : undefined }}
             >
               <Camera size={20} />
               Take Picture
@@ -117,6 +129,7 @@ export function CameraCapture({
               onClick={() => fileInputRef.current?.click()}
               disabled={isAnalyzing}
               className="flex items-center justify-center gap-2 bg-white hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed text-gray-900 py-4 px-6 rounded-full font-semibold transition-all shadow-lg active:scale-[0.98]"
+              style={{ opacity: !isReady ? 0.45 : undefined }}
             >
               <Upload size={20} />
               Upload

@@ -46,7 +46,7 @@ export default function Home() {
               Trust Your Native Tongue
             </h1>
             <p className="text-base sm:text-lg text-zinc-300 max-w-sm">
-              Hear your documents explained in your native language in a matter of seconds (supporting 15+ languages)
+              Hear your documents explained in your native language in a matter of seconds
             </p>
           </div>
 
