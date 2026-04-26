@@ -68,8 +68,14 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="dark min-h-screen bg-background text-foreground">
-      <main className="mx-auto w-full max-w-md sm:max-w-lg px-4 sm:px-6 pt-20 pb-16 space-y-5">
+    <div className="min-h-screen bg-[#1a1a2e] text-white overflow-x-hidden">
+      {/* Ambient glow blobs */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] rounded-full bg-[#E91E7B]/10 blur-[120px]" />
+        <div className="absolute bottom-[-20%] right-[-10%] w-[50%] h-[50%] rounded-full bg-[#E07A6A]/10 blur-[120px]" />
+      </div>
+
+      <main className="relative z-10 mx-auto w-full max-w-5xl px-4 sm:px-6 pt-20 pb-16 flex flex-col gap-8">
 
         <LanguageZipSelector
           language={language}
@@ -85,7 +91,7 @@ export default function Dashboard() {
 
         {/* Error state */}
         {error && (
-          <div className="rounded-xl bg-red-950/60 border border-red-700/50 p-3">
+          <div className="rounded-2xl bg-red-950/60 border border-red-700/50 p-4 max-w-[640px] mx-auto w-full">
             <p className="text-sm text-red-300">{error}</p>
           </div>
         )}
@@ -101,7 +107,9 @@ export default function Dashboard() {
 
         {/* Resource cards */}
         {resources.length > 0 && (
-          <ResourceGrid resources={resources} />
+          <div className="w-full max-w-[640px] mx-auto">
+            <ResourceGrid resources={resources} />
+          </div>
         )}
       </main>
     </div>

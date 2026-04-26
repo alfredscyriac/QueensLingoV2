@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { ChevronsUpDownIcon } from "lucide-react";
-import { cn } from "@/lib/utils";
 import { LANGUAGES } from "@/lib/languages";
 import { QUEENS_ZIPCODES } from "@/lib/zipcodes";
 import {
@@ -38,16 +37,16 @@ export function LanguageZipSelector({
   const [zipOpen, setZipOpen] = useState(false);
 
   return (
-    <div className="flex gap-4">
+    <div className="grid grid-cols-2 gap-4 w-full max-w-[640px] mx-auto">
       <Popover open={langOpen} onOpenChange={setLangOpen}>
         <PopoverTrigger asChild>
           <button
             role="combobox"
             aria-expanded={langOpen}
-            className="flex h-9 w-52 items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-1 focus:ring-ring"
+            className="w-full appearance-none bg-white/5 hover:bg-white/10 backdrop-blur-md border border-white/10 rounded-2xl py-4 pl-5 pr-12 text-white text-sm outline-none focus:border-[#E91E7B]/50 transition-all cursor-pointer shadow-lg flex items-center justify-between"
           >
             {language.native}
-            <ChevronsUpDownIcon className="ml-2 size-4 shrink-0 opacity-50" />
+            <ChevronsUpDownIcon className="ml-2 size-4 shrink-0 text-white/50" />
           </button>
         </PopoverTrigger>
         <PopoverContent className="w-52 p-0">
@@ -83,13 +82,10 @@ export function LanguageZipSelector({
           <button
             role="combobox"
             aria-expanded={zipOpen}
-            className={cn(
-              "flex h-9 w-36 items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-1 focus:ring-ring",
-              !zipcode && "text-muted-foreground"
-            )}
+            className="w-full bg-white/5 hover:bg-white/10 backdrop-blur-md border border-white/10 rounded-2xl py-4 pl-5 pr-12 text-white text-sm outline-none focus:border-[#E91E7B]/50 transition-all cursor-pointer shadow-lg flex items-center justify-between"
           >
-            {zipcode || "Select ZIP…"}
-            <ChevronsUpDownIcon className="ml-2 size-4 shrink-0 opacity-50" />
+            {zipcode || <span className="text-white/50">Select ZIP…</span>}
+            <ChevronsUpDownIcon className="ml-2 size-4 shrink-0 text-white/50" />
           </button>
         </PopoverTrigger>
         <PopoverContent className="w-36 p-0">
