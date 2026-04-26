@@ -90,7 +90,7 @@
   --ql-primary-shadow: #831843;
   --ql-secondary-border: #fbcfe8;
   --ql-secondary-hover: #fdf2f8;
-  --ql-font: var(--font-inter), "Inter", sans-serif;
+  --ql-font: var(--font-roboto), "Roboto", sans-serif;
 }
 
 .dark {
