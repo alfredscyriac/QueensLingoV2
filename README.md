@@ -1,36 +1,98 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+![QueensLingo Banner](./public/queenslingobanner.png)
 
-## Getting Started
+# QueensLingo - Multilingual Document Assistant 
 
-First, run the development server:
+## What It Does
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+QueensLingo is an AI powered tool to help immigrants understand legal documents that contains thick English that may be hard to understand. 
+
+1. **Capture** — point your phone camera at any official document, or upload an image
+2. **Analyze** — Gemini 2.5 Flash model extracts and understands the document
+3. **Explain** — returns a plain-language explanation, action steps, and urgency level in the user's native language
+4. **Listen** — ElevenLabs reads the explanation aloud in that language
+5. **Connect** — Google Places surfaces 3 real nearby organizations that can help, with maps and directions
+
+This multilingual tool aims to help immigrants navigate their new life in a comforting and easier to understand way. 
+
+---
+
+## Video Demo
+<div style="width:100%;">
+  <a href="https://vimeo.com/1186696712?share=copy&fl=sv&fe=ci">
+    <img style="width:100%; height:auto; display:block;" src="./public/landingpage.png">
+  </a>
+</div>
+
+---
+
+## Tech Stack
+
+| Layer | Technology |
+|---|---|
+| Framework | Next.js 14 (App Router, TypeScript) |
+| Styling | Tailwind CSS + shadcn/ui |
+| AI / Vision | Google Gemini 2.5 Flash |
+| Text-to-Speech | ElevenLabs `eleven_multilingual_v2` |
+| Maps & Places | Google Maps + Places API |
+| Deployment | Vercel |
+
+---
+
+## Supported Languages
+
+Spanish, Chinese, Hindi, French, Arabic, Portugese, Russian, Korean, Japanese, German, Italian, Turkish, Polish, Ukranian, Filipino, Tamil 
+
+> The following languages are supported but for these text-to-speech is NOT available: Malayalam, Dari, Bengali, Urdu, Gujarati, Punjabi. All other functionality is still available. 
+
+---
+
+## How It Works
+
+```
+User selects/enters their native language + zipcode
+        ↓
+User captures image or uploads file of document
+        ↓
+The base64 image is passed to Gemini AI via a POST request
+        ↓
+The AI returns a JSON object which contains with the following keys: document type, translated-explanation, next-steps, urgency, keywords-for-resources
+        ↓
+NextStepsPanel displays the document type, translated explanation, and next step. This panel also renders an audio player once Elevenlabs returns the audio file containing the text to speech. Simultaneously as this Panel is rendered so is a ResourceGrid containing 3 ResourceCards of neraby relevant organization. Each card has the name, location, image, and get directions direct link. 
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+queenslingov2/
+├── app/
+│   ├── page.tsx                      # Landing page
+│   ├── dashboard/page.tsx            # Main dashboard (owns all state)
+│   └── api/
+│       ├── analyze/route.ts          # POST: image → Gemini → AnalysisResult
+│       ├── tts/route.ts              # POST: text → ElevenLabs → audio/mpeg
+│       └── resources/route.ts        # GET: keywords + zipcode → Google Places
+├── components/
+│   ├── dashboard/
+│   │   ├── LanguageZipSelector.tsx
+│   │   ├── CameraCapture.tsx
+│   │   ├── NextStepsPanel.tsx
+│   │   ├── ResourceCard.tsx
+│   │   └── ResourceGrid.tsx
+│   └── ui/                           # shadcn/ui components
+├── lib/
+│   ├── gemini.ts                     # analyzeDocument()
+│   ├── elevenlabs.ts                 # synthesizeSpeech()
+│   ├── places.ts                     # fetchNearbyResources()
+│   ├── languages.ts                  # Supported language list
+│   └── zipcodes.ts                   # Queens zipcodes
+└── types/index.ts                    # Shared TypeScript types
+```
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## Developer Notes
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Developer: [Alfred Siby Cyriac](https://www.linkedin.com/in/alfredsiby-cyriac/)
+- Developer: [Sharif Ali](https://www.linkedin.com/in/sharif-ali1/)
