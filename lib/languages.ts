@@ -1,5 +1,5 @@
 export const LANGUAGES = [
-  // Fully supported — Gemini translation + ElevenLabs TTS
+  // TTS fully supported 
   { code: "es", label: "Spanish", native: "Español", ttsSupported: true },
   { code: "zh", label: "Chinese", native: "中文", ttsSupported: true },
   { code: "hi", label: "Hindi", native: "हिन्दी", ttsSupported: true },
@@ -16,10 +16,23 @@ export const LANGUAGES = [
   { code: "uk", label: "Ukrainian", native: "Українська", ttsSupported: true },
   { code: "tl", label: "Filipino", native: "Filipino", ttsSupported: true },
   { code: "ta", label: "Tamil", native: "தமிழ்", ttsSupported: true },
+  { code: "id", label: "Indonesian", native: "Bahasa Indonesia", ttsSupported: true },
+  { code: "nl", label: "Dutch", native: "Nederlands", ttsSupported: true },
+  { code: "sv", label: "Swedish", native: "Svenska", ttsSupported: true },
+  { code: "bg", label: "Bulgarian", native: "Български", ttsSupported: true },
+  { code: "ro", label: "Romanian", native: "Română", ttsSupported: true },
+  { code: "cs", label: "Czech", native: "Čeština", ttsSupported: true },
+  { code: "el", label: "Greek", native: "Ελληνικά", ttsSupported: true },
+  { code: "fi", label: "Finnish", native: "Suomi", ttsSupported: true },
+  { code: "hr", label: "Croatian", native: "Hrvatski", ttsSupported: true },
+  { code: "ms", label: "Malay", native: "Bahasa Melayu", ttsSupported: true },
+  { code: "sk", label: "Slovak", native: "Slovenčina", ttsSupported: true },
+  { code: "da", label: "Danish", native: "Dansk", ttsSupported: true },
+  { code: "en", label: "English", native: "English", ttsSupported: true },
 
-  // Text explanation only — no TTS audio
-  { code: "ml", label: "Malayalam", native: "മലയാളം", ttsSupported: false }, // Team language
-  { code: "fa", label: "Dari", native: "دری", ttsSupported: false }, // Team language
+  // No TTS audio
+  { code: "ml", label: "Malayalam", native: "മലയാളം", ttsSupported: false },
+  { code: "fa", label: "Dari", native: "دری", ttsSupported: false },      
   { code: "bn", label: "Bengali", native: "বাংলা", ttsSupported: false },
   { code: "ur", label: "Urdu", native: "اردو", ttsSupported: false },
   { code: "gu", label: "Gujarati", native: "ગુજરાતી", ttsSupported: false },
